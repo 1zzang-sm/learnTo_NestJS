@@ -184,4 +184,102 @@ npm install pg typeorm @nestjs/typeorm --save
 다큐멘테이션:
 https://docs.nestjs.com/techniques/database 
 
-### 왜 Entity를 생성해야하나요?
+### CLI를 이용한 모듈, 컨트롤러, 서비스 생성
+- nest g module auth
+auth module 생성
+- nest g controller auth --no-spec
+auth 컨트롤러 생성
+- nest g service auth --no-spec
+auth 서비스 생성
+
+### Class-validator
+https://github.com/typestack/class-validator
+
+- 유효성 체크를 하기 위해서는 class-validator 모듈을 이용하면 된다.
+- Dto 파일에서 Request로 들어오는 값을 정의해주고 있기 때문에 Dto 파일에 값들 하나하나에   
+	class-validator를 이용해서 유효성 조건을 넣어준다.
+
+### bcryptjs
+- npm install bcryptjs --save
+import * as bcrypt from 'bcryptjs'
+
+### bcryptjs 원리
+- 이 기능을 구현하기 위해 bcryptjs 라는 모듈을 사용한다.
+
+### 비밀번호를 데이터베이스에 저장하는 방법
+1. 원본 비밀번호를 저장(최악)
+- 1234 ====>> 1234
+
+2. 비밀번호를 암호화 키(Encryption Key)와 함께 암호화(양방향)
+
+3. SHA256등으로 해시(Hash)해서 저장(단방향)
+- 레인보우 테이블을 만들어서 암호화된 비밀번호를 비교해서 비밀번호 알아냄
+ 
+### JWT ?
+- JWT(JSON Web Token)는 당사자간에 정보를 JSON 객체로 안전하게 전송하기 위한 컴팩트하고 독립적인 방식을 정의하는 개방형 표준(RFC 7519)
+- 이 정보는 디지털 서명이 되어 있으므로 확인하고 신뢰할 수 있습니다.
+
+- 간단하게 얘기하자면 정보를 안전하게 전할 때 혹은 유저의 권한 같은 것을 체크하기 위해서 사용하는데 유용한 모듈입니다. 
+
+### 필요한 모듈
+@nestjs/jwt
+- nestjs에서 jwt를 사용하기 위해 필요한 모듈
+@nestjs/passport
+- nestjs에서 passport를 사용하기 위해 필요한 모듈
+passport
+- passport 모듈
+passport-jwt
+- jwt 모듈
+
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt --save
+
+### NestJS Middleware
+- Nest JS에는 여러가지 미들웨어가 있습니다.
+Pipes, Filters, Guards, Interceptors 등의 미들웨어로 취급되는 것들이 있는데 각각 다른 목적을 가지며 사용되고 있다.
+- Pipes: 파이프는 요청 유효성 검사 및 페이로드 변환을 위해 만들어집니다. 데이터를 예상한 대로 직렬화 합니다. 
+- Filters: 필터는 오류 처리 미들웨어입니다. 특정 오류 처리기를 사용할 경로와 각 경로 주변의 복잡성을 관리하는 방법을 알 수 있습니다.
+- Guards: 가드는 인증 미들웨어입니다. 지정된 경로로 통과할 수 있는 사람과 허용되지 않는 사람을 서버에 알려줍니다.
+- Interceptor: 인터셉터는 응답 매핑 및 캐시 관리와 함께 요청 로깅과 같은 전후 미들웨어입니다. 
+	각 요청 전후에 이를 실행하는 기능은 매우 강렬하고 유용합니다.
+### 각각의 미들웨어가 불러지는(called) 순서
+middleware -> guard -> interceptor (before) -> pipe -> controller -> service
+-> controller -> interceptor (after) -> filter (if applicable) -> client
+
+### 관계형 엔티티 매핑 
+https://typeorm.io/#/many-to-one-one-to-many-relations
+
+### Query Builder
+
+### 로그의 종류
+- Log: 중요한 정보의 범용 로깅
+- Warning: 치명적이거나 파괴적이지 않은 처리되지 않은 문제
+- Error: 치명적이거나 파괴적인 처리되지 않은 문제
+- Debug: 오류 발생시 로직을 디버그하는데 도움이되는 유용한 정보
+- Verbose: 응용 프로그램의 동작에 대한 통찰력을 제공하는 정보
+
+### 설정(Configuration) ?
+- 소스 코드안에서 어떠한 코드들은 개발 환경이나 운영 환경에 따라서 다르게 코드를 넣어줘야 할 때가 있으며,
+- 남들에게 노출 되지 않아야 하는 코드들도 있습니다. 이러한 코드들을 위해서 설정 파일을 따로 만들어 보관하겠다.
+
+- runtime 도중에 바뀌는 것이 아닌 애플리케이션이 시작할 때 로드가 되어서 그 값들을 정의하여 줍니다.
+- 그리고 설정 파일은 여러가지 파일 형식을 사용할 수 있습니다.
+- 예로는 XML, JSON, YAML, Enviromant Variables 같은 많은 형식을 이용할 수 있습니다.
+
+### Codebase VS Enviroment Variables(환경 변수)
+- 설정을 할 때 여러가지 형식으로 할 수 있다고 했다.
+- 그곳에서 XML, JSON, YAML, 같은 경우는 Codebase에 해당하며
+- 그리고 다른 방법은 환경 변수로 할 수 있다.
+- 주로 이 둘을 나눠서 하는 이유는 비밀 번호와 API Key 같은 남들에게 노출되면 안되는 정보들을 주로 환경변수를 이용해서 처리해준다. 
+
+Codebase -> 일반적으로 Port 같이 노출되도 상관 없는 정보들 
+환경변수 -> 비밀번호나 API Key 같은 노출되면 안되는 정보들 
+
+### 필요한 모듈 
+- 윈도우에서는 win-node-env를 설치해야한다.
+- npm install -g win-node-env
+
+그 후 win, mac 둘다 config 모듈을 받아야한다. 
+npm install config --save 
+
+### Config 모듈을 이용한 설정 파일 생성
+1. 루트 디렉토리에 config라는 폴더를 만든 후 그 폴더안에 JSON, YAML 형식의 파일을 생성한다. 
